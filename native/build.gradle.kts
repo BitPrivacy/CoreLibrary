@@ -2,22 +2,16 @@ plugins {
     kotlin("multiplatform")
 }
 
-group = "androidovshchik"
-version = "1.0-SNAPSHOT"
-
 kotlin {
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+    val nativeTarget = when (System.getProperty("os.name")) {
+        "Mac OS X" -> macosX64("native")
+        "Linux" -> linuxX64("native")
+        else -> mingwX64("native")
     }
     nativeTarget.apply {
         binaries {
             executable {
-                entryPoint = "main"
+                entryPoint = "$group.main"
             }
         }
     }
@@ -27,6 +21,10 @@ kotlin {
                 implementation(project(":common"))
             }
         }
-        val nativeTest by getting
+        val nativeTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
     }
 }

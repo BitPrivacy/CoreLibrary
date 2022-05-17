@@ -1,3 +1,5 @@
+rootProject.name = "CoreLibrary"
 
-rootProject.name = "untitled"
-
+include(":common")
+include(":native")
+include(":jvm")

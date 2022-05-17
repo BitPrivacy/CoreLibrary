@@ -2,13 +2,10 @@ plugins {
     kotlin("multiplatform")
 }
 
-group = "androidovshchik"
-version = "1.0-SNAPSHOT"
-
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
         }
         withJava()
     }
@@ -18,6 +15,10 @@ kotlin {
                 implementation(project(":common"))
             }
         }
-        val jvmTest by getting
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
     }
 }

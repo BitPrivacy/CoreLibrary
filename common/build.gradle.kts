@@ -2,22 +2,16 @@ plugins {
     kotlin("multiplatform")
 }
 
-group = "androidovshchik"
-version = "1.0-SNAPSHOT"
-
 kotlin {
+    when (System.getProperty("os.name")) {
+        "Mac OS X" -> macosX64("native")
+        "Linux" -> linuxX64("native")
+        else -> mingwX64("native")
+    }
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
         }
-    }
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
     sourceSets {
         val commonMain by getting {
@@ -30,17 +24,25 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val jvmMain by getting {
-            dependencies {
-
-            }
-        }
-        val jvmTest by getting
         val nativeMain by getting {
             dependencies {
 
             }
         }
-        val nativeTest by getting
+        val nativeTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
     }
 }

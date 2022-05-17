@@ -1,3 +1,3 @@
-package androidovshchik.common
+package app.bitprivacy.core.common
 
 expect fun getPlatformName(): String
