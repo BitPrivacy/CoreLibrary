@@ -1,6 +1,0 @@
-#ifndef BITPRIVACY_LIBRARY_H
-#define BITPRIVACY_LIBRARY_H
-
-void hello();
-
-#endif //BITPRIVACY_LIBRARY_H
